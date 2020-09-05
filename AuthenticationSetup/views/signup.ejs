@@ -1,0 +1,36 @@
+<%- include('partials/header.ejs') %>
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="text-center">Register</h3>
+        <p>Please register below</p>
+
+        <% if (typeof ValidationErrors  !== 'undefined' ){ %>
+          <% for (error of ValidationErrors){ %>
+
+            <div class="alert alert-danger" role="alert">
+              <%= error.msg %>
+            </div>
+          <% }} %>
+          <form  method="POST" action="/users/register" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">          
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+          <label for="confirm">Confirm Password</label>
+          <input type="password" class="form-control" id="confirm" name="confirmPassword" placeholder="Confirm Password">
+          <label for="profilepic">Profile picture</label>
+            <input type="file" class="form-control-file" id="profilepic" name="profilepic">
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      </div>
+      </div>
+</div>
+
+<%- include('partials/footer.ejs') %>.
