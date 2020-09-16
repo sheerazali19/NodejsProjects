@@ -1,0 +1,48 @@
+<div class="row mt-5">
+
+  <div class="col-lg-9 col-sm-12 m-auto">
+    <%- include('partials/messages.ejs') %>
+    <!-- Blog Entries Column -->
+      <h1 class="my-4">Populer
+        <small>Cyber Security blogs</small>
+      </h1>
+
+    <% posts.forEach(function(post) { %>
+
+         <!-- Blog Post -->
+      <div class="card mb-4">
+        <img class="card-img-top" src="<%= '/images/coverpic/' + post.coverImage  %>"  alt="Card image cap">
+        <div class="card-body">
+          <h2 class="card-title"><%= post.title %></h2>
+          <p class="card-text"> <%- post.postBody.substring(0, 400) %></p>
+          <a href="/blog/<%= post._id %>" class="btn btn-primary">Read More &rarr;</a>
+        </div>
+        <div class="card-footer text-muted">
+          Posted on <%= post.date.toDateString() %> by
+          <a href="#"><%= post.author %></a>
+        </div>
+      </div>
+      <% }); %>
+     
+     <!-- Pagination -->
+     <ul class="pagination justify-content-center mb-4">
+      <% if(paginationObject.previous){%> 
+       <li class="page-item">
+         <a class="page-link" href="/?page=<%= paginationObject.previous.page %>&limit=5">&larr; Older</a>
+       </li>
+       <% } %>
+       <% if(paginationObject.next){%> 
+       <li class="page-item">
+         <a class="page-link" href="/?page=<%= paginationObject.next.page %>&limit=5">Newer &rarr;</a>
+       </li>
+       <% } %>
+
+     </ul>
+        
+    </div>
+  
+  </div>
+
+</div>
+
+  

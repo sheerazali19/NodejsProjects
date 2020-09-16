@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodeauth</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <script src="https://kit.fontawesome.com/0baa1750ff.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <% if(!currentUser){%> 
+            <li class="nav-item   <% if (title == 'Register') { %> active <% } %> ">
+                <a class="nav-link" href="/users/register">Register</a>
+            </li>
+            <li class="nav-item   <% if (title == 'Login') { %> active <% } %> ">
+                <a class="nav-link" href="/users/login">Login</a>
+            </li>
+          </ul>
+           <% } else{ %> 
+            <li class="nav-item   <% if (title == 'Dashboard') { %> active <% } %> ">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item   <% if (title == 'Add post') { %> active <% } %> ">
+                <a class="nav-link" href="/blog/add">Add Post</a>
+            </li>
+
+          </ul>
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><p class="lead mb-3">Welcome <%= currentUser.username %></p></a>
+            </li> 
+            <li class="nav-item ">
+                <a class="nav-link btn btn-outline-danger" href="/users/logout">Logout</a>
+            </li>
+        </ul> 
+        <% }%>
+        </div>
+      </nav>
+
+<div class="container">
+    <%- body %>
+</div>
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="/javascript/jquery-3.5.1.slim.min.js" ></script>
+<script src="/javascript/popper.min.js"></script>
+<script src="/javascript/bootstrap.min.js"></script>
+</body>
+</html>

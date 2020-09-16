@@ -1,0 +1,62 @@
+<div class="row">
+
+    <!-- Post Content Column -->
+    <div class="col-lg-12">
+      <%- include('partials/messages.ejs') %>
+
+      <!-- Title -->
+      <h1 class="mt-4"><%= post.title %></h1>
+
+      <!-- Author -->
+      <p class="lead">
+        by
+        <a href="#"><%= post.author %></a>
+      </p>
+
+      <hr>
+
+      <!-- Date/Time -->
+      <p>Posted on <%= post.date.toDateString() %> </p>
+
+      <hr>
+
+      <!-- Preview Image -->
+      <img class="img-fluid rounded" src="<%= '/images/coverpic/' + post.coverImage  %>" alt="">
+
+      <hr>
+
+      <!-- Post Content -->
+      <p class="lead"><%- post.postBody %></p>
+
+      <hr>
+
+      <% if(currentUser){ %>
+      <!-- Comments Form -->
+      <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+          <form action="/blog/<%= post._id %>/comment/add" method="POST">
+            <div class="form-group">
+              <textarea name="commentBody" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+      <hr>
+    <% } %>
+    
+    <h5 class="card-header mb-3 ">Comments:</h5>
+
+    <% comments.forEach(function(comment) { %>   
+      <!-- Single Comment -->
+      <div class="media mb-4">
+        <div class="media-body">
+          <h5 class="mt-0"><%= comment.author %></h5>
+          <%= comment.commentBody %>
+        </div>
+      </div>    
+    <%})%>
+    </div>
+</div>
+  <!-- /.row -->

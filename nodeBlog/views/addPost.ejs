@@ -1,0 +1,42 @@
+<div class="row mt-5">
+    <div class="col-md-12 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-clone"></i> Add Post
+        </h1>
+        <%- include('partials/messages.ejs') %>
+        <form action="/blog" method="POST" enctype="multipart/form-data" >
+
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              type="title"
+              id="title"
+              name="title"
+              class="form-control"
+              placeholder="Title"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="postBody">Post</label>
+            <textarea placeholder="Post body"  name="postBody" class="form-control" id="postBody" rows="10"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="coverPic">Cover Picture</label>
+            <input
+              type="file"
+              id="coverPic"
+              name="coverPic"
+              class="form-control"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Publish
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>

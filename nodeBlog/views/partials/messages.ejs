@@ -1,0 +1,33 @@
+<% if (typeof ValidationErrors  !== 'undefined' ){ %>
+    <% for (error of ValidationErrors){ %>
+
+      <div class="alert alert-danger" role="alert">
+        <%= error.msg %>
+      </div>
+<% }} %>
+
+
+<% // Flash messages will come as a string so if they are not passed as empty strings we will show them or we wont %>
+
+<% if(success_msg != undefined){%>
+  <% if (success_msg[0] != undefined) { %>
+    <div class="container ">
+      <div class="alert alert-success "> <%= success_msg %> </div> 
+    </div>
+  <% }} %>
+
+<% if(error_msg != undefined){%>
+  <% if (error_msg[0] != undefined) { %>
+    <div class="container ">
+      <div class="alert alert-danger "> <%= error_msg %> </div> 
+    </div>
+  <% }} %>
+
+  <% // passport messages form req flash  %>
+
+  <% if(error != undefined){%>
+    <% if (error[0] != undefined) { %>
+      <div class="container ">
+        <div class="alert alert-danger "> <%= error %> </div> 
+      </div>
+    <% }} %>
