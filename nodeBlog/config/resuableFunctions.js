@@ -31,4 +31,10 @@ const paginatedResults = (req,model) => {
     return results;
   };
 
+  const getFullUrl = (req) => {
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    return fullUrl;
+  }
+
+  exports.getFullUrl = getFullUrl;
   exports.paginatedResults = paginatedResults;

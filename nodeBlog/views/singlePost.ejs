@@ -1,62 +1,83 @@
 <div class="row">
+  <!-- Post Content Column -->
+  <div class="col-lg-12">
+    <%- include('partials/messages.ejs') %>
 
-    <!-- Post Content Column -->
-    <div class="col-lg-12">
-      <%- include('partials/messages.ejs') %>
+    <!-- Title -->
+    <h1 class="mt-4"><%= post.title %></h1>
 
-      <!-- Title -->
-      <h1 class="mt-4"><%= post.title %></h1>
+    <!-- Author -->
+    <p class="lead">
+      by
+      <a href="#"><%= post.author %></a>
+    </p>
 
-      <!-- Author -->
-      <p class="lead">
-        by
-        <a href="#"><%= post.author %></a>
-      </p>
+    <hr />
 
-      <hr>
+    <!-- Date/Time -->
+    <p>Posted on <%= post.date.toDateString() %></p>
 
-      <!-- Date/Time -->
-      <p>Posted on <%= post.date.toDateString() %> </p>
+    <hr />
 
-      <hr>
+    <!-- Preview Image -->
+    <img
+      class="img-fluid rounded"
+      src="<%= '/images/coverpic/' + post.coverImage  %>"
+      alt=""
+    />
 
-      <!-- Preview Image -->
-      <img class="img-fluid rounded" src="<%= '/images/coverpic/' + post.coverImage  %>" alt="">
+    <hr />
 
-      <hr>
+    <!-- Post Content -->
+    <p class="lead"><%- post.postBody %></p>
 
-      <!-- Post Content -->
-      <p class="lead"><%- post.postBody %></p>
+    <hr />
 
-      <hr>
-
-      <% if(currentUser){ %>
-      <!-- Comments Form -->
-      <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-          <form action="/blog/<%= post._id %>/comment/add" method="POST">
-            <div class="form-group">
-              <textarea name="commentBody" class="form-control" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+    <% if(currentUser){ %>
+    <!-- Comments Form -->
+    <div class="card my-4">
+      <h5 class="card-header">Leave a Comment:</h5>
+      <div class="card-body">
+        <form action="/blog/<%= post._id %>/comment/add" method="POST">
+          <div class="form-group">
+            <textarea
+              name="commentBody"
+              class="form-control"
+              rows="3"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
-      <hr>
-    <% } %>
-    
-    <h5 class="card-header mb-3 ">Comments:</h5>
-
-    <% comments.forEach(function(comment) { %>   
-      <!-- Single Comment -->
-      <div class="media mb-4">
-        <div class="media-body">
-          <h5 class="mt-0"><%= comment.author %></h5>
-          <%= comment.commentBody %>
-        </div>
-      </div>    
-    <%})%>
     </div>
+    <hr />
+    <% } %>
+
+    <h5 class="card-header mb-3">Comments:</h5>
+
+    <% comments.forEach(function(comment) { %>
+    <!-- Single Comment -->
+    <div class="media mb-4">
+      <div class="media-body">
+        <h5 class="mt-0"><%= comment.author %></h5>
+        <%= comment.commentBody %>
+      </div>
+    </div>
+    <div class="card-header mb-3">
+      <a
+        href="/blog/<%= post._id %>/<%= comment._id %>/edit"
+        class="btn btn-info"
+        >Edit &rarr;</a
+      >
+      <form
+        action="/blog/<%= post._id %>/<%= comment._id %>/comment/delete?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger">Delete &rarr;</button>
+      </form>
+    </div>
+
+    <%})%>
+  </div>
 </div>
-  <!-- /.row -->
+<!-- /.row -->

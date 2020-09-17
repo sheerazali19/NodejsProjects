@@ -10,6 +10,7 @@
 
     <div class="col-lg-12 col-sm-12 m-auto">
     <%- include('partials/messages.ejs') %>
+    <% posts.reverse(); %>
     <% posts.forEach(function(post) { %>
 
         <!-- Blog Post -->
@@ -19,6 +20,11 @@
          <h2 class="card-title"><%= post.title %></h2>
          <p class="card-text"> <%- post.postBody.substring(0, 400) %></p>
          <a href="/blog/<%= post._id %>" class="btn btn-primary">Read More &rarr;</a>
+         <a href="/blog/<%= post._id %>/edit" class="btn btn-info">Edit &rarr;</a>
+         <form action="/blog/<%= post._id %>/delete?_method=DELETE" method="POST">
+          <button class="btn btn-danger">Delete &rarr;</button>
+        </form>
+         
        </div>
        <div class="card-footer text-muted">
          Posted on <%= post.date.toDateString() %> by
