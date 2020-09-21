@@ -15,10 +15,16 @@ router.get('/coverpic/:imagename', (req, res) => {
 router.delete('/coverpic/delete/:imagename', (req, res) => {
     const options = { root: path.join(__dirname, '../blogCoverPic') };
     const imageid = req.params.imagename;
-    const imageFullPath = path.join(__dirname, '../blogCoverPic') +  "\\" + req.params.imagename;
-    fs.unlinkSync(imageFullPath);
-    res.json('done')
-    console.log('image have been deleted')
+    if ( imageid == 'placeholder.png'){
+        console.log('image id was ',imageid);
+        res.json('done')
+    }else{
+        const imageFullPath = path.join(__dirname, '../blogCoverPic') +  "\\" + req.params.imagename;
+        fs.unlinkSync(imageFullPath);
+        res.json('done')
+        console.log('image have been deleted')
+    }
+    
 });
 
 

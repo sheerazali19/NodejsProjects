@@ -26,8 +26,9 @@ const paginatedResults = (req,model) => {
     }}
 
     // Slicing the model giving it start and end index
-    results.results = model.slice(startIndex,endIndex);
     
+    results.results = model.slice(startIndex,endIndex);
+
     return results;
   };
 

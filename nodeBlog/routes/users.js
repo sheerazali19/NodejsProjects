@@ -20,6 +20,10 @@ router.post('/register',[
     check('username')
     .notEmpty()
     .withMessage('Name is requierd')
+    .isLowercase()
+    .withMessage('Username must be lowercase')
+    .isAlphanumeric()
+    .withMessage('No Special Chars are allowed in username')
     .custom(async (username) => { 
         const existingUser =  
             await User.findOne({ username:username }) 
