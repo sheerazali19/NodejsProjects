@@ -61,10 +61,6 @@ router.post(
     check("postBody")
       .notEmpty()
       .withMessage("Please enter a post in the post box"),
-
-    // Custom Validation to see if user already exists
-    // check('author')
-    // .notEmpty().withMessage('Author name is requierd')
   ],
 
   (req, res) => {
@@ -77,7 +73,7 @@ router.post(
       });
     } else {
       const { title, postBody } = req.body;
-      const coverpic = req.file.filename;
+      const coverpic = typeof(req.file) != 'undefined' ? req.file.filename : 'placeholder.png';
       const newPost = new Post({
         title: title,
         postBody: postBody,
@@ -138,20 +134,46 @@ router.post(
         );
       });
 
-      // finds that post with post id
-      // .then((comment) => {
-      //      Post.find({ _id : req.params.postid } )
-      //     .then((foundPost) => {
-      //       console.log(foundPost);
-      //     });
-      //});
-
       req.flash("success_msg", "Comment is submitted");
 
       res.redirect("/blog/" + req.params.postid);
     }
   }
 );
+
+// Get Routes
+
+router.get("/:postid/:commentid/comment/edit", ensureAuthenticated, (req, res) => {
+  res.render("editComment", { title: "Edit Comment", postId: req.params.postid , commentId: req.params.commentid });
+});
+
+
+router.post("/:postid/:commentid/comment/edit", ensureAuthenticated, [ check("commentBody").notEmpty().withMessage("comment not specified") ] , ( req, res ) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("editComment" , {  title: "Edit Comment", ValidationErrors: errors.errors, postId: req.params.postid, commentId: req.params.commentid } )
+  } else {
+    Comment.findOne({ _id : req.params.commentid } )
+    .then((comment) => { 
+      console.log(comment)
+      console.log("comment auther and req user" , comment.author , "  <=    => " ,req.user.username)
+      if (comment.author == req.user.username) {
+
+        Comment.findOneAndUpdate({ _id: req.params.commentid },{ commentBody: req.body.commentBody })
+        .then((comment) => { 
+                console.log(comment); 
+                req.flash("success_msg", "Comment was updated"); 
+                res.redirect("/blog/" + req.params.postid); })
+      }
+        else {
+          req.flash("error_msg", "You are not allowed to perform this action");
+          res.redirect("/blog/" + req.params.postid)
+        }
+    })
+  }
+});
+
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //  Edit Blog Routes
@@ -260,7 +282,7 @@ router.delete("/:postid/delete", ensureAuthenticated, (req, res) => {
         "/images/coverpic/delete/" +
         post.coverImage;
       axios.delete(endPoint);
-      
+
       Post.findByIdAndRemove(req.params.postid).then((post) => {
         req.flash("success_msg", "Post Deleted Successfully");
         res.redirect("/dashboard");

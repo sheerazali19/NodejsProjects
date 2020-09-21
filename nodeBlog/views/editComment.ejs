@@ -1,0 +1,24 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Re-Enter the comment</h1>
+        <%- include('partials/messages.ejs') %>
+        <form action="/blog/<%= postId %>/<%= commentId %>/comment/edit" method="POST">
+          <div class="form-group">
+            <label for="commentBody">Comment</label>
+            <input
+              type="text"
+              id="commentBody"
+              name="commentBody"
+              class="form-control"
+              placeholder="Enter comment"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  
